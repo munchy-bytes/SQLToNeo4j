@@ -1,6 +1,10 @@
 # SQLToNeo4j
 A class library used to migrate SQL Server graph database into Neo4j.
 
+# Dependencies
+
+- [Neo4jClient](https://www.nuget.org/packages/Neo4jClient/)
+
 ## Example
 ```csharp
 using System;
