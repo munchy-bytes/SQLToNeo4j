@@ -10,11 +10,22 @@ namespace SQLToNeo4j
     {
         public List<Node> Nodes { get; set; }
         public List<Edge> Edges { get; set; }
+        public List<string> Indexes { get; set; }
+        public List<string> FullTextIndexes { get; set; }
+        public List<string> UniqueConstraints { get; set; }
+        public List<string> ExistenceConstraints { get; set; }
+        public List<string> NodeKeyConstraints { get; set; }
+
         public string ConnectionString { get; set; }
 
         public SQLReader(string connection)
         {
             ConnectionString = connection;
+            Indexes = new List<string>();
+            FullTextIndexes = new List<string>();
+            UniqueConstraints = new List<string>();
+            ExistenceConstraints = new List<string>();
+            NodeKeyConstraints = new List<string>();
         }
         public void GetNodes()
         {
@@ -153,7 +164,106 @@ namespace SQLToNeo4j
             }
 
         }
+        public void GetIndexes()
+        {
+            //initialize connection
+            using (SqlConnection sqlcon = new SqlConnection(ConnectionString))
+            {
+                sqlcon.Open();
+                //retrieving Indexes
 
+                using (SqlCommand sqlIndexes = new SqlCommand(SQLcommands.GetIndexes, sqlcon))
+                {
+                    SqlDataReader indexreader;
+                    indexreader = sqlIndexes.ExecuteReader();
+
+                    //get index create statements
+                    while (indexreader.Read())
+                        Indexes.Add(indexreader[0].ToString());
+                        
+                }
+            }
+        }
+        public void GetFullTextIndexes()
+        {
+            //initialize connection
+            using (SqlConnection sqlcon = new SqlConnection(ConnectionString))
+            {
+                sqlcon.Open();
+                //retrieving Indexes
+
+                using (SqlCommand sqlFullTextIndexes = new SqlCommand(SQLcommands.GetFullTextIndexes, sqlcon))
+                {
+                    SqlDataReader indexreader;
+                    indexreader = sqlFullTextIndexes.ExecuteReader();
+
+                    //get index create statements
+                    while (indexreader.Read())
+                        FullTextIndexes.Add(indexreader[0].ToString());
+
+                }
+            }
+        }
+        public void GetUniqueConstraints()
+        {
+            //initialize connection
+            using (SqlConnection sqlcon = new SqlConnection(ConnectionString))
+            {
+                sqlcon.Open();
+                //retrieving Indexes
+
+                using (SqlCommand sqlUniqueConstraints = new SqlCommand(SQLcommands.GetUniqueConstraints, sqlcon))
+                {
+                    SqlDataReader uqcreader;
+                    uqcreader = sqlUniqueConstraints.ExecuteReader();
+
+                    //get index create statements
+                    while (uqcreader.Read())
+                        UniqueConstraints.Add(uqcreader[0].ToString());
+
+                }
+            }
+        }
+        public void GetExistenceConstraints()
+        {
+            //initialize connection
+            using (SqlConnection sqlcon = new SqlConnection(ConnectionString))
+            {
+                sqlcon.Open();
+                //retrieving Indexes
+
+                using (SqlCommand sqlExistenceConstraints = new SqlCommand(SQLcommands.GetExistenceConstraints, sqlcon))
+                {
+                    SqlDataReader excreader;
+                    excreader = sqlExistenceConstraints.ExecuteReader();
+
+                    //get index create statements
+                    while (excreader.Read())
+                        ExistenceConstraints.Add(excreader[0].ToString());
+
+                }
+            }
+        }
+        public void GetNodeKeyConstraints()
+        {
+            //initialize connection
+            using (SqlConnection sqlcon = new SqlConnection(ConnectionString))
+            {
+                sqlcon.Open();
+                //retrieving Indexes
+
+                using (SqlCommand sqlNodeKeyConstraints = new SqlCommand(SQLcommands.GetNodeKeyConstraints, sqlcon))
+                {
+                    SqlDataReader nkcreader;
+                    nkcreader = sqlNodeKeyConstraints.ExecuteReader();
+
+                    //get index create statements
+                    while (nkcreader.Read())
+                        NodeKeyConstraints.Add(nkcreader[0].ToString());
+
+                }
+            }
+        }
         public void Dispose()
         {
             Nodes = null;

@@ -21,9 +21,9 @@ namespace SQLToNeo4j
                 string cypher =
                 "(" + nd.Label + "_" + nd.ID.ToString() + ":" + nd.Label + " $prop)";
                 client.Cypher.Create(cypher).WithParam("prop", nd.Properties).ExecuteWithoutResultsAsync().Wait(); ;
+            
             }        
         }
-
         public void ImportEdges(List<Edge> edges)
         {
             foreach (Edge edg in edges)
@@ -39,10 +39,24 @@ namespace SQLToNeo4j
                     .Where(edg.FromNode.ToLower() + "1.node_id = $id1")
                     .AndWhere(edg.ToNode.ToLower() + "2.node_id = $id2")
                     .Create(cypher)
-                    .WithParams(param).ExecuteWithoutResultsAsync().Wait(); ;
+                    .WithParams(param).ExecuteWithoutResultsAsync().Wait(); 
             }
         }
-
+        public void ImportIndexes(List<string> indexes)
+        {
+            foreach(string cmd in indexes)
+                client.Cypher.Create(cmd).ExecuteWithoutResultsAsync().Wait();
+         }
+        public void ImportFullTextIndexes(List<string> ftindexes)
+        {
+            foreach (string cmd in ftindexes)
+                client.Cypher.Call(cmd).ExecuteWithoutResultsAsync().Wait();
+        }
+        public void ImportConstraints(List<string> constraints)
+        {
+            foreach (string cmd in constraints)
+                client.Cypher.Create(cmd).ExecuteWithoutResultsAsync().Wait();
+        }
         public void Dispose()
         {
             client.Dispose();

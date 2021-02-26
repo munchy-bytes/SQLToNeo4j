@@ -24,6 +24,7 @@ namespace SQLToNeo4j
                 Properties = properties;
             else
                 Properties = new Dictionary<string, object>();
+
         }
 
     }
