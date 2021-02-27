@@ -8,7 +8,7 @@ namespace SQLToNeo4j
     {
         public static string GetIndexes = "SELECT 'INDEX ' + ind.name + ' FOR (t:' + t.name +') ON (' + STRING_AGG('t.' + Col.name,',') + ')'" +
                                 " FROM sys.indexes ind INNER JOIN sys.index_columns ic ON  ind.object_id = ic.object_id and ind.index_id = ic.index_id INNER JOIN sys.columns col ON ic.object_id = col.object_id and ic.column_id = col.column_id INNER JOIN sys.tables t ON ind.object_id = t.object_id" +
-                                " WHERE ind.type = 2 and (t.is_node = 1 or t.is_edge = 1) and col.name not like 'graph_id_%' and t.name <> 'sysdiagrams'" +
+                                " WHERE ind.type = 2 and (t.is_node = 1 or t.is_edge = 1) and col.name not like 'graph_id_%' and t.name <> 'sysdiagrams' and ind.is_unique = 0 and ind.is_unique_constraint = 0 " +
                                 " GROUP BY  ind.name,  t.name";
         public static string GetFullTextIndexes = "SELECT 'db.index.fulltext.' + case t.is_node when 1 then 'createNodeIndex(\"N_' else 'createRelationshipIndex(\"Rel_' end  + cat.name + '\", [' + STRING_AGG('\"' + t.name + '\"',', ') + '], [' + STRING_AGG('\"' + col.name + '\"',', ') + '])' " +
                                 " FROM sys.fulltext_catalogs cat INNER JOIN sys.fulltext_indexes ind ON cat.fulltext_catalog_id = ind.fulltext_catalog_id INNER JOIN sys.fulltext_index_columns ic ON  ind.object_id = ic.object_id " +
