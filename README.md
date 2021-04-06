@@ -4,7 +4,7 @@ A class library used to migrate SQL Server graph database into Neo4j.
 # Published Articles
 
 - [Migrating SQL Server graph databases to Neo4j](https://www.sqlshack.com/migrating-sql-server-graph-databases-to-neo4j/)
-- Export Indexes and Constraints from SQL Server graph database to Neo4j (Under review)
+- [Export Indexes and Constraints from SQL Server graph database to Neo4j](https://www.sqlshack.com/export-indexes-and-constraints-from-sql-server-graph-databases-to-neo4j/)
 
 # Dependencies
 
