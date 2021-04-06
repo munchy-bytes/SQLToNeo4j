@@ -20,7 +20,7 @@ namespace SQLToNeo4j
     {
         static void Main(string[] args)
         {
-            using (SQLReader reader = new SQLReader("Server=DESKTOP-KCL006K\\DATASERVER;Database=GraphPL;Trusted_Connection=yes;"))
+            using (SQLReader reader = new SQLReader("Server=<server name>\\<instance name>;Database=<database name>;Trusted_Connection=yes;"))
             {
                 reader.GetNodes();
                 reader.GetEdges();
@@ -30,7 +30,7 @@ namespace SQLToNeo4j
                 //reader.GetExistenceConstraints(); -- available only in enterprise edition
                 //reader.GetNodeKeyConstraints(); -- available only in enterprise edition
 
-                using (Neo4jWriter importer = new Neo4jWriter(new Uri("http://neo4j:123@localhost:7474")))
+                using (Neo4jWriter importer = new Neo4jWriter(new Uri("http://neo4j:neo4j@localhost:7474")))
                 {
                     importer.ImportNodes(reader.Nodes);
                     importer.ImportEdges(reader.Edges);
